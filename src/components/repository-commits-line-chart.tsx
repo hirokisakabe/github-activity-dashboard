@@ -63,7 +63,7 @@ async function fetchRepositoryCommits() {
         {}
       );
 
-      return { day: format(targetDate, "MM-dd"), ...repoListObj };
+      return { day: format(targetDate, "MM/dd"), ...repoListObj };
     })
     .reverse();
 
