@@ -1,6 +1,6 @@
 import { fetchByGitHubAPI } from "@/lib";
 import { Card, Title, LineChart } from "@tremor/react";
-import { subDays, format } from "date-fns";
+import { subDays, format, getDay } from "date-fns";
 
 export async function RepositoryCommitsLineChart() {
   const { repos, recentCommits } = await fetchRepositoryCommits();
@@ -63,7 +63,7 @@ async function fetchRepositoryCommits() {
         {}
       );
 
-      return { day: format(targetDate, "MM/dd"), ...repoListObj };
+      return { day: convertDateToXLabel(targetDate), ...repoListObj };
     })
     .reverse();
 
@@ -71,4 +71,29 @@ async function fetchRepositoryCommits() {
     repos,
     recentCommits,
   };
+}
+
+function convertDateToXLabel(date: Date) {
+  const day = getDay(date);
+
+  const dayName = (() => {
+    switch (day) {
+      case 0:
+        return "日";
+      case 1:
+        return "月";
+      case 2:
+        return "火";
+      case 3:
+        return "水";
+      case 4:
+        return "木";
+      case 5:
+        return "金";
+      case 6:
+        return "土";
+    }
+  })();
+
+  return `${format(date, "MM/dd")}(${dayName})`;
 }
