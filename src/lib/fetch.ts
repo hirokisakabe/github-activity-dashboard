@@ -8,7 +8,7 @@ export async function fetchByGitHubAPI(url: string) {
   const res = await fetch(url, {
     headers: { Authorization: `Bearer ${token}` },
     next: {
-      revalidate: 60 * 60 * 24, // 1day
+      revalidate: 60,
     },
   });
 
